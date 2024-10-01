@@ -1,0 +1,29 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/common_button"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/dimen_12dp"
+        android:background="@drawable/ic_rounded_rectangle_selected"
+        android:clickable="true"
+        android:drawableStart="@drawable/ic_check_circle"
+        android:drawablePadding="@dimen/dimen_12dp"
+        android:drawableTint="@color/gold"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:paddingStart="@dimen/dimen_24dp"
+        android:paddingTop="@dimen/dimen_8dp"
+        android:paddingEnd="@dimen/dimen_24dp"
+        android:paddingBottom="@dimen/dimen_8dp"
+        android:text="@string/add_subscription_to_cart"
+        android:textColor="@color/gold"
+        android:textSize="@dimen/text_size_l"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date_selection_layout" />
+</merge>

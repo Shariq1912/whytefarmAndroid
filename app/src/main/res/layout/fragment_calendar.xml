@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/layout_main_toolbar" />
+
+    <LinearLayout
+        android:id="@+id/content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar">
+
+        <CalendarView
+            android:id="@+id/calendar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-16dp"
+            android:clipToPadding="false"
+            android:theme="@style/Widget.CalendarView.Custom" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/orders_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-48dp"
+            android:background="@drawable/gradient_bg"
+            android:paddingStart="@dimen/dimen_16dp"
+            android:paddingTop="@dimen/dimen_12dp"
+            android:paddingEnd="@dimen/dimen_16dp"
+            android:paddingBottom="@dimen/dimen_12dp"
+            android:textColor="@color/gold"
+            android:textSize="@dimen/text_size_l"
+            android:textStyle="bold"
+            tools:text="Showing orders for: Mon, May 29 2024" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/order_update_tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/light_yellow"
+            android:padding="@dimen/dimen_8dp"
+            android:text="@string/order_update_tip"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="@dimen/text_size_s"/>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/order_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingBottom="84dp"
+            android:visibility="visible"
+            tools:listitem="@layout/item_order" />
+
+        <LinearLayout
+            android:id="@+id/vacation_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="?android:attr/colorBackground"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_32dp"
+            android:visibility="gone">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                app:srcCompat="@drawable/ic_vacation_mode" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                android:gravity="center"
+                android:text="@string/you_are_on_vacation" />
+        </LinearLayout>
+
+        <include layout="@layout/layout_nothing_found" />
+
+
+    </LinearLayout>
+
+    <include layout="@layout/layout_login_needed" />
+</androidx.constraintlayout.widget.ConstraintLayout>

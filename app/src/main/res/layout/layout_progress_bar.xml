@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@color/black_translucent"
+        android:clickable="true"
+        android:elevation="@dimen/highest_elevation"
+        android:focusable="true"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="@dimen/dimen_48dp"
+            android:layout_height="@dimen/dimen_48dp"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/white"
+            android:rotation="120" />
+
+        <ProgressBar
+            android:layout_width="@dimen/dimen_48dp"
+            android:layout_height="@dimen/dimen_48dp"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/black"
+            android:rotation="240" />
+
+        <ProgressBar
+            android:layout_width="@dimen/dimen_48dp"
+            android:layout_height="@dimen/dimen_48dp"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/gold"
+            android:rotation="0" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="@dimen/dimen_30dp"
+            android:layout_height="@dimen/dimen_30dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_launcher" />
+    </FrameLayout>
+
+</merge>

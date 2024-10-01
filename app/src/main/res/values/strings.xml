@@ -1,0 +1,277 @@
+<resources>
+    <string name="app_name" translatable="false">WhyteFarms</string>
+    <string name="welcome_greeting">Welcome</string>
+    <string name="search_hint">Search…</string>
+    <string name="subscriptions">Subscriptions</string>
+    <string name="shop">Shop</string>
+    <string name="wallet">Wallet</string>
+    <string name="price_placeholder" translatable="false">₹%d</string>
+    <string name="cart_wallet_balance_placeholder" translatable="false">(-) ₹%d</string>
+    <string name="quantity_placeholder" translatable="false">QTY: %d</string>
+    <string name="recommended" translatable="false">Recommended</string>
+    <string name="new_product">N\nE\nW</string>
+    <string name="buy_once">Buy Once</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="cart">Cart</string>
+    <string name="select_packaging">Select Packaging:</string>
+    <string name="everyday">Everyday</string>
+    <string name="on_interval">On Interval</string>
+    <string name="custom">Customize</string>
+    <string name="tapper" translatable="false">tapper</string>
+    <string name="subscription_deadline_hint">Subscribe by %s today to get the delivery by tomorrow</string>
+    <string name="get_the_delivery_title">"Get the Delivery of: "</string>
+    <string name="every">Or, Every</string>
+    <string name="day">day</string>
+    <string name="start_subscription">Start Subscription</string>
+    <string name="qty" translatable="false">Qty.</string>
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="calendar">Calendar</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="active_vertical">A\nC\nT\nI\nV\nE</string>
+    <string name="paused_vertical">P\nA\nU\nS\nE\nD</string>
+    <string name="ended_vertical">E\nN\nD\nE\nD</string>
+
+    <string name="active">Active</string>
+    <string name="paused">Paused</string>
+    <string name="ended">Ended</string>
+
+    <string name="subscription_delivery_date">Delivery Date: %s</string>
+    <string name="subscription_start_date">Start Date: %s</string>
+    <string name="subscription_end_date">End Date: %s</string>
+    <string name="subscription_resume_date">Resume Date: %s</string>
+    <string name="txns">Transactions</string>
+    <string name="phone_number_hint">Enter your 10-digit Phone No.</string>
+    <string name="welcome_to_whytefarms">Welcome to\nWhyteFarms</string>
+    <string name="otp_hint">Enter 4-digit OTP</string>
+    <string name="generate_otp">Send OTP</string>
+    <string name="submit_otp">Submit OTP</string>
+    <string name="filter">Filter</string>
+
+    <!-- TxtLocal -->
+    <string name="txt_local_message_placeholder" translatable="false">Your One Time Password (OTP) is %s. Please enter this to complete the verification. In case of further assistance call us at %s / %s.
+    </string>
+    <string name="login_failed_check_otp">Login Failed!! Check OTP</string>
+    <string name="login_failed_check_phone">Invalid Phone Number</string>
+    <string name="tap_to_set_longer_interval">(Tap to set longer interval)</string>
+    <string name="app_logo">Whyte Farms</string>
+    <string name="tagline_1" translatable="false">discover our</string>
+    <string name="tagline_2" translatable="false">FRESH GOODNESS</string>
+    <string name="follow">Follow Us on:</string>
+    <string name="facebook">facebook</string>
+    <string name="instagram">instagram</string>
+    <string name="my_address">My Address</string>
+    <string name="my_profile">My Profile</string>
+    <string name="my_orders">My Orders</string>
+    <string name="delivery_preferences">Delivery Preferences</string>
+    <string name="refer_n_earn">Refer Us</string>
+    <string name="app_language">Change App Language</string>
+    <string name="logout">Logout</string>
+    <string name="help_n_support">Help &amp; Support</string>
+    <string name="legal_n_about_us">Legal &amp; About us</string>
+    <string name="help">Vacations</string>
+    <string name="rate_us">Rate Us on Play Store</string>
+    <string name="toggle_menu">Toggle Menu</string>
+    <string name="until_cancelled">Until Ended/Paused°</string>
+    <string name="subscription_cancellation_tip">° Subscription can be paused by you or by the system, if your wallet balance is low.</string>
+    <string name="ends_on">Ends On</string>
+    <string name="tap_to_change_date">(Tap to Change Date)</string>
+    <string name="starts_on">Starts On</string>
+    <string name="english">English</string>
+    <string name="hindi">Hindi</string>
+    <string name="change_language">Change App Language</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email_address">E-mail Address</string>
+    <string name="gender">Gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="other">Other</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="date_placeholder" translatable="false">dd-mm-yyyy</string>
+    <string name="anniversary_date">Anniversary Date</string>
+    <string name="save_details">Save Details</string>
+    <string name="vacations_mode">Vacation Mode</string>
+    <string name="remove">Remove</string>
+    <string name="default_address">(Default)</string>
+    <string name="save_address">Save Address</string>
+    <string name="please_wait_save_address">Please wait while we save the address…</string>
+    <string name="enter_your_address">Enter Your Address</string>
+    <string name="full_name">Full Name</string>
+    <string name="contact_details">Contact Details</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="address">Address</string>
+    <string name="flat_house_building">Flat No./House No./Building Name</string>
+    <string name="colony_street_locality">Colony/Street/Locality</string>
+    <string name="landmark">Landmark (include Near, Behind, Beside, etc.)</string>
+    <string name="city">City</string>
+    <string name="pincode">Pincode</string>
+    <string name="state">State</string>
+    <string name="home_address_tip">This is a home address</string>
+    <string name="work_address_tip">This is a work address</string>
+    <string name="make_default">Make this my default address</string>
+    <string name="ring_door_bell">Ring Doorbell</string>
+    <string name="drop_at_door">Drop at the door</string>
+    <string name="in_hand_delivery">In-hand Delivery</string>
+    <string name="keep_in_bag">Keep in Bag</string>
+    <string name="no_preference">No Preference</string>
+    <string name="additional_instructions_optional">Additional Instructions (Optional)</string>
+    <string name="no_vacations_added_yet">No Vacations Added Yet!!</string>
+    <string name="add_a_vacation">Add a Vacation</string>
+    <string name="no_orders_yet">No Orders Yet!!</string>
+    <string name="go_to_shop">Go to Shop</string>
+    <string name="wallet_balance">Wallet Balance</string>
+    <string name="current_balance">Current Balance</string>
+    <string name="top_up_wallet">Top up Wallet</string>
+    <string name="add_money">Add Money</string>
+    <string name="cash_recharge">Cash Recharge</string>
+    <string name="login_needed_hint">You need to login to access this area. Please Login with your phone number.</string>
+    <string name="login_now">Login now</string>
+    <string name="subscription_delivery_tip">You\'ll get %s Qty. of %s every %s day.</string>
+    <string name="subscription_delivery_tip_one_time">You\'ll get %s Qty. of %s on %s.</string>
+    <string name="every_nth_day">Every %s day</string>
+
+    <string name="_8th" translatable="false">8th</string>
+    <string name="otp_matched">Great!! OTP Matches. Please wait while we log you in.</string>
+    <string name="invalid_otp_error">Enter 4-digit OTP received on your phone</string>
+    <string name="empty_otp_error">OTP can\'t be empty!!</string>
+    <string name="login_failed_error">Oops!! Login Failed. Please try again later.</string>
+    <string name="otp_sent_successfully">OTP sent successfully.</string>
+    <string name="otp_send_error">Could not send OTP. Check phone Number</string>
+    <string name="user">Guest</string>
+    <string name="pause_subscription">Pause Subscription</string>
+    <string name="resume_subscription">Resume Subscription</string>
+    <string name="pause_subscription_alert">Do you really want to pause this subscription?\n\n\nEnter Resume Date (Optional):</string>
+    <string name="resume_subscription_alert">Do you really want to resume this subscription?</string>
+    <string name="no">No, Cancel</string>
+    <string name="your_subscriptions">Your Subscriptions</string>
+    <string name="filter_by">Filter By:</string>
+    <string name="all">All</string>
+    <string name="nothing_found">Nothing Found.</string>
+    <string name="orders_title">Showing orders for: %s</string>
+    <string name="cannot_fetch_customer_data">Cannot Fetch Customer Data</string>
+    <string name="cancellation_reason_placeholder">Cancellation Reason: %s</string>
+    <string name="cancellation_time_placeholder">Cancellation Time: %s</string>
+    <string name="delivered">Delivered</string>
+    <string name="cancelled">Cancelled</string>
+    <string name="new_order">New Order</string>
+    <string name="login">Login</string>
+    <string name="start_end_date_error">Selected End Date should be greater than selected Start Date.</string>
+    <string name="add_address">Add a Delivery Address</string>
+    <string name="loading">Loading…</string>
+    <string name="no_address_added">No Delivery Address added yet!!!</string>
+    <string name="address_edit_failed">Edit Address Failed…</string>
+    <string name="edit_address">Edit Address</string>
+    <string name="add_a_new_address">Add A New Address</string>
+    <string name="geo_locate_your_address">Geo-Locate Your Address*</string>
+    <string name="latitude_placeholder" translatable="false">Latitude: %.2f</string>
+    <string name="longitude_placeholder" translatable="false">Longitude: %.2f</string>
+    <string name="select_hub">Select Hub</string>
+    <string name="region">Region:</string>
+    <string name="location">"Location: "</string>
+    <string name="flat_number_cannot_be_empty">Flat Number cannot be empty!!!</string>
+    <string name="landmark_cannot_be_empty">Landmark cannot be empty!!!</string>
+    <string name="city_cannot_be_empty">City cannot be empty!!!</string>
+    <string name="state_cannot_be_empty">State cannot be empty!!!</string>
+    <string name="please_check_the_entered_details">Please check the entered details…</string>
+    <string name="address_placeholder" translatable="false">%s, %s, %s, %s, %s, %s</string>
+    <string name="floor">Floor</string>
+    <string name="floor_cannot_be_empty">Floor cannot be empty!!!</string>
+    <string name="saved_successfully">Saved Successfully</string>
+    <string name="not_saved">Save Unsuccessful</string>
+    <string name="no_change">No change in details. Aborting Save.</string>
+    <string name="price_details">Price Details</string>
+    <string name="price_title_placeholder">Price (%d Items)</string>
+    <string name="item_value_placeholder" translatable="false">₹ %d</string>
+    <string name="delivery_charge">Delivery Charge</string>
+    <string name="free">FREE</string>
+    <string name="wallet_balance_reqd">Required Wallet Balance</string>
+    <string name="subscription_delivery_tip_everyday">You\'ll get %s Qty. of %s everyday.</string>
+    <string name="add_balance_placeholder">Add ₹%d to Wallet &amp; Start Subscription</string>
+    <string name="nothing_in_the_cart">There is nothing in your shopping box. Please fill it up with our amazing products…</string>
+    <string name="add_address_to_create_subscription">Add a delivery address to create subscription</string>
+    <string name="available_wallet_balance">Available Wallet Balance</string>
+    <string name="delivery_address_tip">Subscriptions will be delivered to:\n(Timings: 6:00am to 9:30am)</string>
+    <string name="save_delivery_preferences">Save Delivery Preferences</string>
+    <string name="first_name_cannot_be_empty">First Name cannot be empty.</string>
+    <string name="last_name_cannot_be_empty">Last Name cannot be empty.</string>
+    <string name="email_address_cannot_be_empty">Email cannot be empty.</string>
+    <string name="enter_valid_email_address">Please enter a valid email address.</string>
+    <string name="add_vacation">Add Vacation</string>
+    <string name="failed_to_fetch_orders">Failed to fetch orders for this date. Please try again later.</string>
+    <string name="you_are_on_vacation">Seems like you\'re on vacation for this date. Resume your services if you\'re back.</string>
+    <string name="subscription_type_placeholder">Subscription Type: %s</string>
+    <string name="update_order">Update Order</string>
+    <string name="change_app_theme">Change App Theme</string>
+    <string name="follow_system">System</string>
+    <string name="dark">Dark</string>
+    <string name="light">Light</string>
+    <string name="app_settings">App Settings</string>
+    <string name="enter_amount">Enter Recharge Amount</string>
+    <string name="minimum_required_amount">Minimum required amount: ₹</string>
+    <string name="plus_100" translatable="false">+100</string>
+    <string name="plus_500" translatable="false">+500</string>
+    <string name="plus_2000" translatable="false">+2000</string>
+    <string name="recharge_now">Recharge Now</string>
+    <string name="cash_collection">Cash Collection</string>
+    <string name="failed_to_fetch_transactions">Failed to fetch transactions</string>
+    <string name="raise_cash_recharge_request">Raise Cash Recharge Request</string>
+    <string name="recharge_successful">Recharge Successful</string>
+    <string name="recharge_failed">Recharge Failed</string>
+    <string name="payment_cancelled">Payment Cancelled</string>
+    <string name="add_subscription_to_cart">Add Subscription to Cart</string>
+    <string name="resend_otp_countdown">Resend OTP in %d sec.</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="vacation_cannot_be_edited">Sorry, this vacation cannot be edited!!!</string>
+    <string name="vacation_mode_on">Vacation Mode: ON</string>
+    <string name="my_vacations">My Vacations</string>
+    <string name="interval">Interval</string>
+    <string name="update_error">Update Failed.</string>
+    <string name="update_successful">Updated Successfully.</string>
+    <string name="vacation_delete_error">Vacation Delete Failed.</string>
+    <string name="vacation_deleted_successfully">Vacation Deleted Successfully.</string>
+    <string name="delivery_date">Deliver On</string>
+    <string name="added_to_cart_successfully">Added to cart successfully.</string>
+    <string name="subscription_added_to_cart_successfully">Subscription added to cart successfully.</string>
+    <string name="subscription_added_to_cart_failed">Failed to add to cart.</string>
+    <string name="update_subscription">Update Subscription</string>
+    <string name="subscriptions_created_successfully">Subscription Created Successfully.</string>
+    <string name="please_wait_while_subscription_adding">Please wait while subscriptions are being created…</string>
+    <string name="wallet_credited">Amount Credited</string>
+    <string name="wallet_debited">Amount Debited</string>
+    <string name="by_system">By System</string>
+    <string name="login_to_see_wallet_balance">Login to see wallet balance</string>
+    <string name="login_to_see_saved_address">Login to see saved address</string>
+    <string name="delte_subscription">Delete Subscription</string>
+    <string name="delete_subscription_warning">You are going to delete your %s subscription for %s %s. Are you sure you want to do this?</string>
+    <string name="subscription_delete_error">Subscription could not be deleted. Contact support if the issue persists.</string>
+    <string name="subscription_delete_success">Subscription deleted successfully.</string>
+    <string name="cannot_change_start_date">Cannot change start date while editing the subscription.</string>
+    <string name="cannot_change_start_date_short">(Cannot change start date)</string>
+    <string name="my_delivery_details">My Delivery Details</string>
+    <string name="delivery_executive">Delivery Executive</string>
+    <string name="call">Call</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="order_update_tip">These orders can be updated until: %s</string>
+    <string name="quantity_error">Product quantity cannot be 0</string>
+    <string name="vacation_selection_hint">Vacation can only be added one day before vacation start date.</string>
+    <string name="call_us">Call Us</string>
+    <string name="email_us">Email Us</string>
+    <string name="whatsapp">WhatsApp</string>
+    <string name="email">E-mail</string>
+    <string name="get_support_over">Get Support over:</string>
+
+    <!-- cash collection -->
+    <string name="cash_collection_title">Cash Collection</string>
+    <string name="amount_label">Amount</string>
+    <string name="date_label">Date</string>
+    <string name="date_hint">dd-mm-yyyy</string>
+    <string name="cash_collection_info">Cash will be collected at the time of delivery.</string>
+    <string name="submit">Submit</string>
+</resources>

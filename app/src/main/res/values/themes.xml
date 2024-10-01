@@ -1,0 +1,104 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.WhyteFarms" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorOnPrimary">@color/gold</item>
+        <item name="colorSecondary">@color/light_gray</item>
+        <item name="colorSecondaryVariant">@color/light_gray</item>
+        <item name="android:fontFamily">@font/hurme_geometric_sans</item>
+        <item name="fontFamily">@font/hurme_geometric_sans</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:editTextBackground">@color/light_gray</item>
+        <item name="android:editTextColor">@color/black</item>
+        <item name="android:strokeColor">@color/black</item>
+        <item name="titleTextAppearance">@style/HurmeGeometricSansTextAppearance</item>
+        <item name="android:textSize">@dimen/text_size_m</item>
+        <item name="textInputStyle">@style/AppTextField</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+
+        <item name="android:colorBackground">@color/light_gray</item>
+        <item name="colorControlNormal">@color/gold</item>
+        <!-- Custom -->
+        <item name="android:colorForeground">@color/black</item>
+
+        <item name="colorAccent">@color/black</item>
+
+        <item name="textAppearanceBody1">@style/HurmeGeometricSansTextAppearance</item>
+        <item name="textAppearanceBodyMedium">@style/HurmeGeometricSansTextAppearance</item>
+
+        <item name="android:buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="android:buttonBarNeutralButtonStyle">@style/NeutralButtonStyle</item>
+
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+    </style>
+
+    <style name="MyTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/black</item>
+        <item name="hintTextColor">@color/black</item>
+    </style>
+
+
+    <style name="AlertDialogStyle" parent="MaterialAlertDialog.Material3">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="buttonBarNeutralButtonStyle">@style/NeutralButtonStyle</item>
+    </style>
+
+
+    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/gold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="NeutralButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@android:color/holo_blue_light</item>
+    </style>
+
+    <style name="Widget.CalendarView.Custom" parent="Widget.Material3.MaterialCalendar">
+        <item name="android:weekDayTextAppearance">@style/TextAppearance.AppCompat.Medium</item>
+        <item name="android:dateTextAppearance">@style/TextAppearance.AppCompat.Medium</item>
+        <item name="android:padding">@dimen/dimen_4dp</item>
+    </style>
+
+    <style name="HurmeGeometricSansTextAppearance">
+        <item name="android:fontFamily">@font/hurme_geometric_sans</item>
+    </style>
+
+    <style name="PlayfairDisplayTextAppearance">
+        <item name="android:fontFamily">@font/playfair_display</item>
+    </style>
+
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/description_layout_bg</item>
+        <item name="android:colorBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="AppTextField" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:colorBackground">@color/gray</item>
+        <item name="strokeColor">@color/gold</item>
+        <item name="android:height">48dp</item>
+    </style>
+
+    <style name="TabText" parent="Widget.Design.TabLayout">
+        <item name="android:textSize">@dimen/text_size_s</item>
+    </style>
+
+    <style name="SpinnerStyle" parent="Widget.AppCompat.Spinner">
+        <item name="overlapAnchor">false</item>
+        <item name="android:dropDownVerticalOffset">0dp</item>
+        <item name="android:dropDownHeight">240dp</item>
+    </style>
+
+    <style name="Theme.WhyteFarms.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme.WhyteFarms.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+</resources>

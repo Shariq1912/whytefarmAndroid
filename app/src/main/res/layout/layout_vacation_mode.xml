@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/vacation_mode_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="top|center_horizontal"
+    android:layout_marginTop="-24dp"
+    android:visibility="gone"
+    app:cardCornerRadius="@dimen/dimen_12dp"
+    app:cardUseCompatPadding="true">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/active_subscription_bg"
+        android:clickable="true"
+        android:drawableStart="@drawable/ic_vacations_24dp"
+        android:drawablePadding="@dimen/dimen_8dp"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:gravity="center"
+        android:paddingStart="@dimen/dimen_24dp"
+        android:paddingTop="@dimen/dimen_20dp"
+        android:paddingEnd="@dimen/dimen_24dp"
+        android:paddingBottom="@dimen/dimen_8dp"
+        android:text="@string/vacation_mode_on"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
+
+</androidx.cardview.widget.CardView>

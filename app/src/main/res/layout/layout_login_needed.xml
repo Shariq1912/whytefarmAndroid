@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/login_needed"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:attr/colorBackground"
+        android:clickable="true"
+        android:elevation="@dimen/highest_elevation"
+        android:focusable="true"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/login_illustration"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:layout_constraintBottom_toTopOf="@+id/login_needed_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_mobile_login" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/login_needed_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_12dp"
+            android:gravity="center"
+            android:padding="@dimen/dimen_16dp"
+            android:text="@string/login_needed_hint"
+            app:layout_constraintBottom_toTopOf="@+id/login_now_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_illustration" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/login_now_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_16dp"
+            android:layout_weight="1"
+            android:background="@drawable/ic_rounded_rectangle_selected"
+            android:clickable="true"
+            android:drawablePadding="@dimen/dimen_16dp"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:maxWidth="@dimen/dimen_max_width"
+            android:paddingStart="@dimen/dimen_24dp"
+            android:paddingTop="@dimen/dimen_12dp"
+            android:paddingEnd="@dimen/dimen_24dp"
+            android:paddingBottom="@dimen/dimen_12dp"
+            android:text="@string/login_now"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            app:drawableStartCompat="@drawable/ic_key"
+            app:drawableTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_needed_hint" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</merge>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/description_layout_bg"
+    android:padding="@dimen/dimen_12dp"
+    app:layout_behavior="@string/bottom_sheet_behavior"
+    tools:context=".fragments.FragmentProfile">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/vacation_start_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/dimen_20dp">
+
+            <ImageView
+                android:id="@+id/tapper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_16dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/tapper"
+                android:src="@drawable/ic_tapper"
+                app:layout_constraintBottom_toTopOf="@+id/date_selection_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <include layout="@layout/layout_date_selection" />
+
+            <include layout="@layout/layout_common_button" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <include layout="@layout/layout_progress_bar" />
+    </FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

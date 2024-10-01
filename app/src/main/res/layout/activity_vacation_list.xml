@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.VacationListActivity">
+
+    <include layout="@layout/layout_toolbar" />
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/vacation_illustration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@+id/vacation_status"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_vacation_mode" />
+
+
+                <LinearLayout
+                    android:id="@+id/no_vacation_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/vacation_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="@dimen/dimen_16dp"
+                        android:text="@string/no_vacations_added_yet"
+                        app:layout_constraintBottom_toTopOf="@id/vacation_recycler"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/vacation_illustration" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/add_vacation_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:layout_margin="@dimen/dimen_12dp"
+                        android:background="@drawable/ic_rectangle_selected"
+                        android:drawableStart="@drawable/ic_vacations_24dp"
+                        android:drawablePadding="@dimen/dimen_24dp"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:maxWidth="488dp"
+                        android:paddingStart="@dimen/dimen_24dp"
+                        android:paddingTop="@dimen/dimen_12dp"
+                        android:paddingEnd="@dimen/dimen_24dp"
+                        android:paddingBottom="@dimen/dimen_12dp"
+                        android:text="@string/add_a_vacation"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        app:drawableTint="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/vacation_recycler" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/vacation_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_12dp"
+                    android:clipToPadding="false"
+                    android:nestedScrollingEnabled="false"
+                    android:paddingBottom="@dimen/payu_dimen_72dp"
+                    app:layout_constraintBottom_toTopOf="@+id/add_vacation_button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/vacation_status"
+                    tools:listitem="@layout/item_vacation" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <include layout="@layout/layout_login_needed" />
+
+        <include layout="@layout/layout_progress_bar" />
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,0 +1,63 @@
+[versions]
+agp = "8.5.1"
+annotation = "1.8.0"
+circleimageview = "3.1.0"
+circleindicator = "2.1.6"
+compiler = "4.16.0"
+desugar_jdk_libs = "2.0.4"
+dexter = "6.2.3"
+fastadapter = "5.7.0"
+fastadapterCommons = "3.3.1"
+firebaseBom = "33.1.1"
+glide = "4.16.0"
+grpcOkhttp = "1.63.0"
+ion = "3.1.0"
+junit = "4.13.2"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+appcompat = "1.7.0"
+material = "1.12.0"
+constraintlayout = "2.1.4"
+lifecycleLivedataKtx = "2.8.3"
+lifecycleViewmodelKtx = "2.8.3"
+payuCheckoutPro = "2.3.3"
+playServicesLocation = "21.3.0"
+viewpager2 = "1.1.0"
+activity = "1.9.0"
+coreI18n = "1.0.0-alpha01"
+
+[libraries]
+annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
+circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
+circleindicator = { module = "me.relex:circleindicator", version.ref = "circleindicator" }
+compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "compiler" }
+desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
+dexter = { module = "com.karumi:dexter", version.ref = "dexter" }
+fastadapter = { module = "com.mikepenz:fastadapter", version.ref = "fastadapter" }
+fastadapter-commons = { module = "com.mikepenz:fastadapter-commons", version.ref = "fastadapterCommons" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
+firebase-perf = { module = "com.google.firebase:firebase-perf" }
+firebase-storage = { module = "com.google.firebase:firebase-storage" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+grpc-okhttp = { module = "io.grpc:grpc-okhttp", version.ref = "grpcOkhttp" }
+ion = { module = "com.koushikdutta.ion:ion", version.ref = "ion" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
+lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+payu-checkout-pro = { module = "in.payu:payu-checkout-pro", version.ref = "payuCheckoutPro" }
+play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
+viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewpager2" }
+activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+core-i18n = { group = "androidx.core", name = "core-i18n", version.ref = "coreI18n" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/txn_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/dimen_4dp"
+    android:paddingEnd="@dimen/dimen_4dp">
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/txn_image"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="@dimen/dimen_4dp"
+        android:importantForAccessibility="no"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@id/separator"
+        app:layout_constraintEnd_toStartOf="@+id/txn_details_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/txn_details_layout"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_8dp"
+        android:orientation="vertical"
+        android:padding="@dimen/dimen_4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/separator"
+        app:layout_constraintEnd_toStartOf="@+id/balance_layout"
+        app:layout_constraintStart_toEndOf="@+id/txn_image"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txn_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/dimen_8dp"
+            android:paddingEnd="@dimen/dimen_8dp"
+            android:textAppearance="@style/HurmeGeometricSansTextAppearance"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="@dimen/text_size_m"
+            android:textStyle="bold"
+            tools:text="A2 Cow's Milk" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txn_sub_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/dimen_8dp"
+            android:paddingEnd="@dimen/dimen_8dp"
+            android:textAppearance="@style/HurmeGeometricSansTextAppearance"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="@dimen/text_size_s"
+
+            app:layout_constraintBottom_toTopOf="@+id/txn_time"
+            app:layout_constraintEnd_toStartOf="@+id/txn_value"
+            app:layout_constraintStart_toEndOf="@+id/txn_image"
+            app:layout_constraintTop_toBottomOf="@+id/txn_name"
+            tools:text="1 ltr" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txn_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/dimen_8dp"
+            android:paddingEnd="@dimen/dimen_8dp"
+            android:textAppearance="@style/HurmeGeometricSansTextAppearance"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="@dimen/text_size_s"
+            app:layout_constraintBottom_toTopOf="@id/separator"
+            app:layout_constraintEnd_toStartOf="@+id/txn_value"
+            app:layout_constraintStart_toEndOf="@+id/txn_image"
+            app:layout_constraintTop_toBottomOf="@+id/txn_sub_heading"
+            tools:text="Jan 20, 2024 11:30 AM" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/balance_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/separator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txn_details_layout"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txn_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="end"
+            android:paddingStart="@dimen/dimen_4dp"
+            android:paddingEnd="@dimen/dimen_4dp"
+            android:textColor="@color/green"
+            android:textSize="@dimen/text_size_l"
+            android:textStyle="bold"
+            tools:text="₹86.00" />
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txn_image" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

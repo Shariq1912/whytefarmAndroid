@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_profile"
+            android:title="@string/my_profile" />
+        <item
+            android:id="@+id/nav_language"
+            android:icon="@drawable/ic_settings_gear"
+            android:title="@string/app_settings" />
+        <item
+            android:id="@+id/nav_rate_us"
+            android:icon="@drawable/ic_star"
+            android:title="@string/rate_us" />
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/ic_help"
+            android:title="@string/help_n_support" />
+        <item
+            android:id="@+id/nav_refer"
+            android:icon="@drawable/ic_refer"
+            android:title="@string/refer_n_earn" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_legal"
+            android:title="@string/legal_n_about_us" />
+    </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_login"
+            android:icon="@drawable/ic_key"
+            android:title="@string/login"
+            />
+    </group>
+
+
+</menu>

@@ -1,0 +1,103 @@
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+}
+
+android {
+    namespace 'com.whytefarms'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.whytefarms"
+        minSdk 26
+        targetSdk 34
+        versionCode 81
+        versionName "6.0.5"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            crunchPngs true
+            multiDexEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    bundle {
+        language {
+            enableSplit = false
+        }
+        density {
+            enableSplit = true
+        }
+        abi {
+            enableSplit = true
+        }
+
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    implementation platform(libs.firebase.bom)
+    implementation(libs.firebase.firestore) {
+        exclude module: 'io.grpc:grpc-okhttp'
+    }
+
+    implementation libs.firebase.analytics
+    implementation libs.firebase.crashlytics
+    implementation libs.firebase.storage
+    implementation libs.firebase.perf
+
+    implementation libs.activity
+    implementation libs.core.i18n
+    annotationProcessor libs.annotation
+
+    implementation libs.glide
+    annotationProcessor libs.compiler
+
+    implementation libs.ion
+    implementation libs.grpc.okhttp
+
+    implementation libs.fastadapter
+    implementation libs.fastadapter.commons
+
+    implementation libs.viewpager2
+
+    implementation libs.dexter
+
+    implementation libs.play.services.location
+
+    implementation libs.circleimageview
+
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.constraintlayout
+    implementation libs.lifecycle.livedata.ktx
+    implementation libs.lifecycle.viewmodel.ktx
+
+    implementation libs.payu.checkout.pro
+    implementation libs.viewpager2
+
+
+    implementation libs.circleindicator
+
+
+    implementation libs.play.services.location
+
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+
+    coreLibraryDesugaring libs.desugar.jdk.libs
+}

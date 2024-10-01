@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.AddressActivity">
+
+    <include layout="@layout/layout_toolbar" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_16dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/select_hub"
+                    android:textColor="@color/gold"
+                    android:textSize="@dimen/text_size_m"
+                    android:textStyle="bold" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_12dp"
+                    android:text="@string/region"
+                    android:textStyle="bold" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    app:cardBackgroundColor="?android:attr/colorBackground"
+                    app:cardCornerRadius="@dimen/dimen_4dp"
+                    app:cardElevation="@dimen/dimen_2dp"
+                    app:cardUseCompatPadding="true">
+
+                    <FrameLayout
+                        android:id="@+id/hub_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:foreground="@drawable/ic_rectangle">
+
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/hub_spinner"
+                            style="@style/SpinnerStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dimen_36dp"
+                            tools:listitem="@layout/item_hub" />
+
+                        <ProgressBar
+                            android:id="@+id/hub_spinner_progress"
+                            android:layout_width="@dimen/dimen_36dp"
+                            android:layout_height="@dimen/dimen_36dp"
+                            android:layout_gravity="end"
+                            android:layout_marginEnd="@dimen/dimen_8dp" />
+
+                    </FrameLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_12dp"
+                    android:text="@string/location"
+                    android:textStyle="bold" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    app:cardBackgroundColor="?android:attr/colorBackground"
+                    app:cardCornerRadius="@dimen/dimen_4dp"
+                    app:cardElevation="@dimen/dimen_2dp"
+                    app:cardUseCompatPadding="true">
+
+                    <FrameLayout
+                        android:id="@+id/location_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:foreground="@drawable/ic_rectangle">
+
+                        <com.whytefarms.utils.InstantAutoComplete
+                            android:id="@+id/location_auto_complete"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dimen_36dp"
+                            android:drawableStart="@drawable/ic_location"
+                            android:drawablePadding="@dimen/dimen_8dp"
+                            android:hint="Select location..."
+                            android:padding="@dimen/dimen_8dp" />
+
+                        <ProgressBar
+                            android:id="@+id/location_spinner_progress"
+                            android:layout_width="@dimen/dimen_36dp"
+                            android:layout_height="@dimen/dimen_36dp"
+                            android:layout_gravity="end"
+                            android:layout_marginEnd="@dimen/dimen_8dp" />
+                    </FrameLayout>
+                </androidx.cardview.widget.CardView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_1dp"
+                    android:layout_marginStart="@dimen/dimen_4dp"
+                    android:layout_marginTop="@dimen/dimen_16dp"
+                    android:layout_marginEnd="@dimen/dimen_4dp"
+                    android:layout_marginBottom="@dimen/dimen_16dp"
+                    android:alpha="0.5"
+                    android:background="?attr/colorOnBackground" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_4dp"
+                    android:text="@string/address"
+                    android:textColor="@color/gold"
+                    android:textSize="@dimen/text_size_m"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/flat_number"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nextFocusDown="@+id/locality">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/flat_house_building"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPostalAddress"
+                        android:nextFocusDown="@+id/floor"
+                        android:textCursorDrawable="@drawable/ic_cursor"
+                        android:textSize="@dimen/text_size_s" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/floor"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_12dp"
+                    android:nextFocusDown="@+id/district">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/floor"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPostalAddress"
+                        android:nextFocusDown="@+id/landmark"
+                        android:textCursorDrawable="@drawable/ic_cursor"
+                        android:textSize="@dimen/text_size_s" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/landmark"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_12dp"
+                    android:nextFocusDown="@+id/district">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/landmark"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPostalAddress"
+                        android:nextFocusDown="@+id/city"
+                        android:textCursorDrawable="@drawable/ic_cursor"
+                        android:textSize="@dimen/text_size_s" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_12dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/city"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dimen_6dp"
+                        android:layout_weight="1"
+                        android:nextFocusDown="@+id/state">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/city"
+                            android:imeOptions="actionNext"
+                            android:inputType="textPostalAddress"
+                            android:nextFocusDown="@+id/district"
+                            android:textCursorDrawable="@drawable/ic_cursor"
+                            android:textSize="@dimen/text_size_s" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/state"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="@dimen/dimen_0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_6dp"
+                        android:layout_weight="1"
+                        android:nextFocusDown="@+id/geo_locate">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/state"
+                            android:imeOptions="actionDone"
+                            android:inputType="textPostalAddress"
+                            android:textCursorDrawable="@drawable/ic_cursor"
+                            android:textSize="@dimen/text_size_s" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_1dp"
+                    android:layout_marginStart="@dimen/dimen_4dp"
+                    android:layout_marginTop="@dimen/dimen_16dp"
+                    android:layout_marginEnd="@dimen/dimen_4dp"
+                    android:layout_marginBottom="@dimen/dimen_16dp"
+                    android:alpha="0.5"
+                    android:background="?attr/colorOnBackground" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/geo_locate_your_address"
+                    android:textColor="@color/gold"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/geolocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_4dp"
+                    android:background="@drawable/ic_edittext_background"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/dimen_8dp"
+                    android:paddingEnd="@dimen/dimen_8dp"
+                    android:weightSum="1">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/latitude"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/dimen_8dp"
+                            android:paddingBottom="@dimen/dimen_4dp"
+                            tools:text="Latitude: 29.90" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/longitude"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/dimen_4dp"
+                            android:paddingBottom="@dimen/dimen_8dp"
+                            tools:text="Longitude: 78.30" />
+                    </LinearLayout>
+
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/geo_locate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_rectangle_selected"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:padding="@dimen/dimen_12dp"
+                        android:src="@drawable/ic_locate"
+                        android:tint="@color/white" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_1dp"
+                    android:layout_marginStart="@dimen/dimen_4dp"
+                    android:layout_marginTop="@dimen/dimen_16dp"
+                    android:layout_marginEnd="@dimen/dimen_4dp"
+                    android:layout_marginBottom="@dimen/dimen_16dp"
+                    android:alpha="0.5"
+                    android:background="?attr/colorOnBackground" />
+
+                <RadioGroup
+                    android:id="@+id/address_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/is_home"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:nextFocusDown="@+id/is_work"
+                        android:text="@string/home_address_tip" />
+
+                    <RadioButton
+                        android:id="@+id/is_work"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:nextFocusDown="@+id/make_default"
+                        android:text="@string/work_address_tip" />
+                </RadioGroup>
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/btn_save_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/dimen_12dp"
+                    android:background="@drawable/ic_rounded_rectangle_selected"
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_check_circle"
+                    android:drawablePadding="@dimen/dimen_12dp"
+                    android:drawableTint="@color/white"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingStart="@dimen/dimen_24dp"
+                    android:paddingTop="@dimen/dimen_12dp"
+                    android:paddingEnd="@dimen/dimen_24dp"
+                    android:paddingBottom="@dimen/dimen_12dp"
+                    android:text="@string/save_address"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <include layout="@layout/layout_progress_bar" />
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "149750199117",
+    "project_id": "whytefarmsweb",
+    "storage_bucket": "whytefarmsweb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:149750199117:android:1724a3c4d232bc28937d04",
+        "android_client_info": {
+          "package_name": "com.whytefarms"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAv72mzG1poe_bOjC4sLW6PqE4au0UQg_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:149750199117:android:11f4af32bc669b13937d04",
+        "android_client_info": {
+          "package_name": "com.whytefarms.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAv72mzG1poe_bOjC4sLW6PqE4au0UQg_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:149750199117:android:3b3fe1c557e5e8a6937d04",
+        "android_client_info": {
+          "package_name": "com.whytefarms.delivery_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAv72mzG1poe_bOjC4sLW6PqE4au0UQg_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

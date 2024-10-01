@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dimen_8dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/new_status_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_bg"
+        android:drawableStart="@drawable/ic_subscription_24dp"
+        android:gravity="center"
+        android:paddingStart="@dimen/dimen_24dp"
+        android:paddingTop="@dimen/dimen_12dp"
+        android:paddingEnd="@dimen/dimen_24dp"
+        android:paddingBottom="@dimen/dimen_12dp"
+        android:textColor="@color/gold"
+        android:textSize="@dimen/text_size_xl"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/status_change_warning"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Pause Subscription" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/status_change_warning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_12dp"
+        android:padding="@dimen/dimen_4dp"
+        android:textSize="@dimen/text_size_l"
+        app:layout_constraintBottom_toTopOf="@+id/date_picker"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_status_heading"
+        tools:text="@string/pause_subscription_alert" />
+
+    <FrameLayout
+        android:id="@+id/date_picker"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="@dimen/dimen_4dp"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:layout_marginEnd="@dimen/dimen_4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/status_change_warning">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/resume_date_input"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_edittext_background"
+            android:cursorVisible="false"
+            android:gravity="center_vertical"
+            android:hint="@string/date_placeholder"
+            android:inputType="date"
+            android:padding="@dimen/dimen_12dp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/resume_date_input_cal"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="1dp"
+            android:background="@drawable/color_bg"
+            android:clickable="true"
+            android:elevation="@dimen/dimen_8dp"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:padding="@dimen/dimen_12dp"
+            android:src="@drawable/ic_calendar" />
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

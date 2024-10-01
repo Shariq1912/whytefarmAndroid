@@ -1,0 +1,7 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_home" />
+    <item
+        android:bottom="28dp"
+        android:drawable="@drawable/ic_add_circle"
+        android:start="28dp" />
+</layer-list>

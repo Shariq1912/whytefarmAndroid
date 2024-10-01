@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.LoginActivity">
+
+    <include layout="@layout/layout_toolbar" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="25">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="9"
+                android:scaleType="fitXY"
+                android:src="@drawable/login_bg">
+
+                <!-- <LinearLayout
+                     android:id="@+id/header"
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:layout_marginStart="-96dp"
+                     android:layout_marginTop="-96dp"
+                     android:layout_marginEnd="-96dp"
+                     android:layout_marginBottom="0dp"
+                     android:orientation="horizontal"
+                     android:weightSum="2"
+                     app:layout_constraintBottom_toTopOf="@+id/content"
+                     app:layout_constraintEnd_toEndOf="parent"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintTop_toTopOf="parent">
+
+                     <androidx.appcompat.widget.AppCompatImageView
+                         android:id="@+id/black_blob"
+                         android:layout_width="0dp"
+                         android:layout_height="400dp"
+                         android:layout_gravity="top|start"
+                         android:layout_weight="1"
+                         android:background="@drawable/green_bg"
+                         android:backgroundTint="@color/black" />
+
+
+                     <de.hdodenhof.circleimageview.CircleImageView
+                         android:id="@+id/designer_blob"
+                         android:layout_width="0dp"
+                         android:layout_height="340dp"
+                         android:layout_gravity="top|end"
+                         android:layout_marginStart="-50dp"
+                         android:layout_weight="1"
+                         android:background="@drawable/main_circle_bg"
+                         android:maxHeight="300dp"
+                         android:padding="0dp"
+                         app:civ_circle_background_color="@android:color/transparent" />
+                 </LinearLayout>-->
+
+                <!--<androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/welcome_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|bottom"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="@dimen/dimen_16dp"
+                    android:layout_marginBottom="72dp"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/welcome_to_whytefarms"
+                    android:textAppearance="@style/PlayfairDisplayTextAppearance"
+                    android:textColor="@color/gold"
+                    android:textSize="30sp" />-->
+            </androidx.appcompat.widget.AppCompatImageView>
+
+            <LinearLayout
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="16"
+                android:isScrollContainer="true"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/header">
+
+                <LinearLayout
+                    android:id="@+id/phone_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/dimen_16dp"
+                    android:paddingBottom="@dimen/dimen_16dp">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/phone_layout_input"
+                        style="@style/MyTextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/phone_number_hint"
+                            android:inputType="phone"
+                            android:maxLength="10" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/generate_otp_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/dimen_24dp"
+                        android:background="@drawable/ic_rounded_rectangle_selected"
+                        android:drawableStart="@drawable/ic_password"
+                        android:drawablePadding="@dimen/dimen_12dp"
+                        android:drawableTint="@color/gold"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:paddingStart="@dimen/dimen_24dp"
+                        android:paddingTop="@dimen/dimen_12dp"
+                        android:paddingEnd="@dimen/dimen_24dp"
+                        android:paddingBottom="@dimen/dimen_12dp"
+                        android:text="@string/generate_otp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/gold"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/otp_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/dimen_16dp"
+                    android:paddingBottom="@dimen/dimen_16dp"
+                    android:visibility="gone">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/otp_layout_input"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/otp_hint"
+                            android:inputType="number"
+                            android:maxLength="6" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/submit_otp_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/dimen_24dp"
+                        android:background="@drawable/ic_rounded_rectangle_selected"
+                        android:drawableStart="@drawable/ic_check_circle"
+                        android:drawablePadding="@dimen/dimen_12dp"
+                        android:drawableTint="@color/gold"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:paddingStart="@dimen/dimen_24dp"
+                        android:paddingTop="@dimen/dimen_12dp"
+                        android:paddingEnd="@dimen/dimen_24dp"
+                        android:paddingBottom="@dimen/dimen_12dp"
+                        android:text="@string/submit_otp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/gold"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/resend_otp_countdown"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/resend_otp_countdown"
+                        android:visibility="gone" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/resend_otp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/resend_otp"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/login_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/dimen_8dp"
+                    android:paddingBottom="@dimen/dimen_8dp"
+                    android:textAppearance="@style/HurmeGeometricSansTextAppearance"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <include
+            layout="@layout/layout_progress_bar"
+            android:visibility="gone" />
+    </FrameLayout>
+</LinearLayout>

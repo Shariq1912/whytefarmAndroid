@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="128"
+    android:viewportHeight="128">
+    <path
+        android:fillColor="@color/gold"
+        android:pathData="M62.396,119.59m-6.416,0a6.416,6.416 0,1 1,12.831 0a6.416,6.416 0,1 1,-12.831 0" />
+    <path
+        android:fillColor="@color/gold"
+        android:pathData="M112.686,119.59m-6.416,0a6.416,6.416 0,1 1,12.831 0a6.416,6.416 0,1 1,-12.831 0" />
+    <path android:pathData="M122.507,96.38H54.628l-2.67,-8.716 67.089,-0.32a6.44,6.44 0,0 0,5.94 -6.394l-0.614,-40.752a2.137,2.137 0,0 0,0.267 -4.258L32.376,23.872 25.662,1.994H5.493a4.004,4.004 0,0 0,0 8.009H19.735l28.966,94.386H122.507a4.004,4.004 0,0 0,0 -8.009Z">
+
+        <aapt:attr name="android:fillColor">
+
+            <gradient
+                android:endX="15.546"
+                android:endY="128"
+                android:startX="15.546"
+                android:startY="0"
+                android:type="linear">
+
+                <item
+                    android:color="@color/gold"
+                    android:offset="0" />
+
+                <item
+                    android:color="@color/gold_translucent"
+                    android:offset="1" />
+
+            </gradient>
+
+        </aapt:attr>
+    </path>
+</vector>
