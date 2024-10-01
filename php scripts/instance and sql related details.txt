@@ -1,0 +1,9 @@
+sql details
+sql root password: 1234
+
+db username: whytefarm_dev
+db password: whytefarms@123
+
+
+hosted on instance: 18.191.16.122
+the key pair file is added in the same folder
