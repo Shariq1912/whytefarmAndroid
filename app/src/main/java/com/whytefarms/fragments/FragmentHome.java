@@ -369,62 +369,95 @@ public class FragmentHome extends Fragment implements FirebaseFirestoreResultLis
 
                 @Override
                 public void onClick(@NonNull View view, int position, @NonNull FastAdapter<Order> fastAdapter, @NonNull Order item) {
-                    database.collection(AppConstants.BULK_QUANTITY_UPDATE_COLLECTION)
-                            .where(Filter.and(Filter.equalTo("customer_id", item.customer_id),
-                                    Filter.equalTo("subscription_id", item.subscription_id),
-                                    Filter.equalTo("delivery_date", selectedDate)))
+                    database.collection(AppConstants.CUSTOMER_DATA_COLLECTION)
+                            .whereEqualTo("customer_id", item.customer_id)
                             .limit(1)
                             .get()
-                            .addOnCompleteListener(task -> {
-                                if (task.isSuccessful()) {
-                                    if (task.getResult() != null && !task.getResult().isEmpty()) {
+                            .addOnCompleteListener(walletTask -> {
+                                if (walletTask.isSuccessful() && walletTask.getResult() != null && !walletTask.getResult().isEmpty()) {
+                                    Customer customer = walletTask.getResult().getDocuments().get(0).toObject(Customer.class);
+                                    double walletBalance = customer.wallet_balance;
 
-                                        BulkUpdateQuantity bulkUpdateQuantity = task.getResult().getDocuments().get(0).toObject(BulkUpdateQuantity.class);
+                                    database.collection(AppConstants.SUBSCRIPTION_DATA_COLLECTION)
+                                            .whereEqualTo("subscription_id", item.subscription_id)
+                                            .limit(1)
+                                            .get()
+                                            .addOnCompleteListener(subscriptionTask -> {
+                                                if (subscriptionTask.isSuccessful() && subscriptionTask.getResult() != null && !subscriptionTask.getResult().isEmpty()) {
+                                                    Subscription subscription = subscriptionTask.getResult().getDocuments().get(0).toObject(Subscription.class);
+                                                    double totalCost = subscription.price * item.quantity;
+                                                    
+                                                    if (totalCost <= walletBalance) {
+                                                        database.collection(AppConstants.BULK_QUANTITY_UPDATE_COLLECTION)
+                                                                .where(Filter.and(Filter.equalTo("customer_id", item.customer_id),
+                                                                        Filter.equalTo("subscription_id", item.subscription_id),
+                                                                        Filter.equalTo("delivery_date", selectedDate)))
+                                                                .limit(1)
+                                                                .get()
+                                                                .addOnCompleteListener(task -> {
+                                                                    if (task.isSuccessful()) {
+                                                                        if (task.getResult() != null && !task.getResult().isEmpty()) {
 
-                                        if (bulkUpdateQuantity != null) {
-                                            bulkUpdateQuantity.quantity = item.quantity;
+                                                                            BulkUpdateQuantity bulkUpdateQuantity = task.getResult().getDocuments().get(0).toObject(BulkUpdateQuantity.class);
 
-                                            task.getResult().getDocuments().get(0).getReference().set(bulkUpdateQuantity)
-                                                    .addOnCompleteListener(task1 -> {
-                                                        if (task1.isSuccessful()) {
-                                                            Toast.makeText(requireActivity(), R.string.update_successful, Toast.LENGTH_SHORT).show();
-                                                            item.isOrderUpdated = false;
-                                                            fastAdapter.notifyAdapterItemChanged(fastAdapter.getPosition(item));
-                                                            logCustomerActivity(item, "Quantity Updated", bulkUpdateQuantity.delivery_date);
-                                                            startFetchingOrders();
-                                                        } else {
-                                                            Toast.makeText(requireActivity(), R.string.update_error, Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    });
-                                        }
-                                    } else {
-                                        BulkUpdateQuantity bulkUpdateQuantity = new BulkUpdateQuantity();
+                                                                            if (bulkUpdateQuantity != null) {
+                                                                                bulkUpdateQuantity.quantity = item.quantity;
 
-                                        bulkUpdateQuantity.customer_id = item.customer_id;
-                                        try {
-                                            bulkUpdateQuantity.date = new Timestamp(DateUtils.getDateFromString(selectedDate, "yyyy-MM-dd", false));
-                                        } catch (ParseException e) {
-                                            bulkUpdateQuantity.date = new Timestamp(new Date(calendar.getDate()));
-                                        }
-                                        bulkUpdateQuantity.delivery_date = selectedDate;
-                                        bulkUpdateQuantity.product_name = item.product_name;
-                                        bulkUpdateQuantity.quantity = item.quantity;
-                                        bulkUpdateQuantity.status = "1";
-                                        bulkUpdateQuantity.subscription_id = item.subscription_id;
+                                                                                task.getResult().getDocuments().get(0).getReference().set(bulkUpdateQuantity)
+                                                                                        .addOnCompleteListener(task1 -> {
+                                                                                            if (task1.isSuccessful()) {
+                                                                                                Toast.makeText(requireActivity(), R.string.update_successful, Toast.LENGTH_SHORT).show();
+                                                                                                item.isOrderUpdated = false;
+                                                                                                fastAdapter.notifyAdapterItemChanged(fastAdapter.getPosition(item));
+                                                                                                logCustomerActivity(item, "Quantity Updated", bulkUpdateQuantity.delivery_date);
+                                                                                                startFetchingOrders();
+                                                                                            } else {
+                                                                                                Toast.makeText(requireActivity(), R.string.update_error, Toast.LENGTH_SHORT).show();
+                                                                                            }
+                                                                                        });
+                                                                            }
+                                                                        } else {
+                                                                            BulkUpdateQuantity bulkUpdateQuantity = new BulkUpdateQuantity();
 
-                                        database.collection(AppConstants.BULK_QUANTITY_UPDATE_COLLECTION).add(bulkUpdateQuantity)
-                                                .addOnCompleteListener(task12 -> {
-                                                    if (task12.isSuccessful()) {
-                                                        Toast.makeText(requireActivity(), R.string.update_successful, Toast.LENGTH_SHORT).show();
-                                                        item.isOrderUpdated = false;
-                                                        fastAdapter.notifyAdapterItemChanged(fastAdapter.getPosition(item));
-                                                        logCustomerActivity(item, "Quantity Updated", bulkUpdateQuantity.delivery_date);
-                                                        startFetchingOrders();
-                                                    } else {
-                                                        Toast.makeText(requireActivity(), R.string.update_error, Toast.LENGTH_SHORT).show();
+                                                                            bulkUpdateQuantity.customer_id = item.customer_id;
+                                                                            try {
+                                                                                bulkUpdateQuantity.date = new Timestamp(DateUtils.getDateFromString(selectedDate, "yyyy-MM-dd", false));
+                                                                            } catch (ParseException e) {
+                                                                                bulkUpdateQuantity.date = new Timestamp(new Date(calendar.getDate()));
+                                                                            }
+                                                                            bulkUpdateQuantity.delivery_date = selectedDate;
+                                                                            bulkUpdateQuantity.product_name = item.product_name;
+                                                                            bulkUpdateQuantity.quantity = item.quantity;
+                                                                            bulkUpdateQuantity.status = "1";
+                                                                            bulkUpdateQuantity.subscription_id = item.subscription_id;
+
+                                                                            database.collection(AppConstants.BULK_QUANTITY_UPDATE_COLLECTION).add(bulkUpdateQuantity)
+                                                                                    .addOnCompleteListener(task12 -> {
+                                                                                        if (task12.isSuccessful()) {
+                                                                                            Toast.makeText(requireActivity(), R.string.update_successful, Toast.LENGTH_SHORT).show();
+                                                                                            item.isOrderUpdated = false;
+                                                                                            fastAdapter.notifyAdapterItemChanged(fastAdapter.getPosition(item));
+                                                                                            logCustomerActivity(item, "Quantity Updated", bulkUpdateQuantity.delivery_date);
+                                                                                            startFetchingOrders();
+                                                                                        } else {
+                                                                                            Toast.makeText(requireActivity(), R.string.update_error, Toast.LENGTH_SHORT).show();
+                                                                                        }
+                                                                                    });
+                                                                        }
+                                                                    } else {
+                                                                        Toast.makeText(requireActivity(), R.string.update_error, Toast.LENGTH_SHORT).show();
+                                                                    }
+                                                                });
+                                                           } else {
+                                                            double shortageAmount = totalCost - walletBalance;
+                                                            Toast.makeText(requireActivity(), 
+                                                                String.format("Add ₹%.2f to wallet to proceed", shortageAmount), 
+                                                                Toast.LENGTH_SHORT).show();
                                                     }
-                                                });
-                                    }
+                                                } else {
+                                                    Toast.makeText(requireActivity(), R.string.update_error, Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
                                 } else {
                                     Toast.makeText(requireActivity(), R.string.update_error, Toast.LENGTH_SHORT).show();
                                 }
