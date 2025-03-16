@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="none"
                     android:hint="@string/date_hint"
-                    android:background="@drawable/edittext_background"
+                    android:background="@drawable/ic_edittext_background"
                     android:focusable="false"
                     android:clickable="true"/>
 

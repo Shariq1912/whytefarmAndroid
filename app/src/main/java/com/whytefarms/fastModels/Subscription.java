@@ -4,7 +4,9 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
 import static java.lang.Double.NaN;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 
@@ -187,10 +189,15 @@ public class Subscription extends AbstractItem<Subscription.SubscriptionViewHold
         @SuppressLint("ClickableViewAccessibility")
         @Override
         public void bindView(@NonNull Subscription item, @NonNull List<?> list) {
-
+            // Fix for Glide crash - check if context is still valid
+            if (item.mContext instanceof Activity) {
+                Activity activity = (Activity) item.mContext;
+                if (activity.isFinishing() || activity.isDestroyed()) {
+                    return;
+                }
+            }
 
             subscriptionType.setText(item.subscription_type.toUpperCase());
-
 
             database.collection(AppConstants.PRODUCTS_DATA_COLLECTION).where(Filter.equalTo("productName", item.product_name)).limit(1).get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
@@ -201,9 +208,32 @@ public class Subscription extends AbstractItem<Subscription.SubscriptionViewHold
                             Product product = documentSnapshot.toObject(Product.class);
 
                             if (product != null) {
-                                Glide.with(productImage.getContext()).load(product.image_transparent_bg).transition(withCrossFade(new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build())).skipMemoryCache(true).centerCrop().dontAnimate().dontTransform().priority(Priority.IMMEDIATE).encodeFormat(Bitmap.CompressFormat.PNG).format(DecodeFormat.DEFAULT).into(productImage);
+                                // Check if context is still valid before loading image
+                                if (item.mContext instanceof Activity) {
+                                    Activity activity = (Activity) item.mContext;
+                                    if (activity.isFinishing() || activity.isDestroyed()) {
+                                        return;
+                                    }
+                                }
+                                
+                                try {
+                                    // Use the product's image URL directly
+                                    Glide.with(productImage.getContext())
+                                        .load(product.image_transparent_bg)
+                                        .transition(withCrossFade(new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build()))
+                                        .skipMemoryCache(true)
+                                        .centerCrop()
+                                        .dontAnimate()
+                                        .dontTransform()
+                                        .priority(Priority.IMMEDIATE)
+                                        .encodeFormat(Bitmap.CompressFormat.PNG)
+                                        .format(DecodeFormat.DEFAULT)
+                                        .error(R.drawable.color_bg)
+                                        .into(productImage);
+                                } catch (Exception e) {
+                                    Log.e("Subscription", "Error loading product image", e);
+                                }
                             }
-
                         }
                     }
                 }
@@ -332,7 +362,10 @@ public class Subscription extends AbstractItem<Subscription.SubscriptionViewHold
 
         @Override
         public void unbindView(@NonNull Subscription item) {
-
+            // Cancel any pending Glide requests
+            if (productImage != null) {
+                Glide.with(itemView.getContext()).clear(productImage);
+            }
         }
     }
 }

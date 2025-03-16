@@ -22,6 +22,11 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.whytefarms.R;
 import com.whytefarms.adapters.TabAdapter;
 import com.whytefarms.application.WhyteFarmsApplication;
+import com.whytefarms.models.AppUpdate;
+import com.whytefarms.utils.Cart;
+import com.whytefarms.utils.UpdateChecker;
+import com.whytefarms.dialogs.UpdateDialog;
+
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
@@ -33,8 +38,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
+        
+        checkForUpdates();
 
         NavigationView navigationView = findViewById(R.id.navigation);
 
@@ -211,5 +217,40 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
+    private void checkForUpdates() {
+        UpdateChecker updateChecker = new UpdateChecker(this);
+        updateChecker.checkForUpdates(new UpdateChecker.UpdateCheckListener() {
+            @Override
+            public void onUpdateRequired(AppUpdate update) {
+                new UpdateDialog(MainActivity.this).show(update);
+            }
+
+            @Override
+            public void onUpdateNotRequired() {
+                // App is up to date
+            }
+
+            @Override
+            public void onError(String error) {
+                // Handle error if needed
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        
+        // Check if user is logged in and migrate cart if needed
+        if (getApplicationContext() instanceof WhyteFarmsApplication && 
+            ((WhyteFarmsApplication) getApplicationContext()).isLoggedIn()) {
+            
+            // Migrate any items in SharedPreferences to Firestore
+            Cart cart = new Cart(this);
+            cart.migrateCartToFirestore();
+        }
+        
+        // Rest of your existing onResume code...
+    }
 
 }
