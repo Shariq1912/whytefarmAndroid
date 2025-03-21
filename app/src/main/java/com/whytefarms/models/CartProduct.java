@@ -14,7 +14,8 @@ public class CartProduct {
     private String reason;
     private String subscriptionType;
     private String image;
-    
+
+
     // All numeric fields as Long to match Firestore Number type
     private Long friday;
     private Long interval;
