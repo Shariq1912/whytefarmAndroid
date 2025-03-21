@@ -89,7 +89,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import me.relex.circleindicator.CircleIndicator3;
 
 
-public class FragmentHome extends Fragment implements FirebaseFirestoreResultListener, TextWatcher {
+public class FragmentHome extends Fragment implements FirebaseFirestoreResultListener, TextWatcher
+{
 
     private final FastItemAdapter<Product> productAdapter = new FastItemAdapter<>();
     private final FastItemAdapter<Item> productFilterAdapter = new FastItemAdapter<>();
