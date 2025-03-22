@@ -268,7 +268,7 @@ public class FragmentHome extends Fragment implements FirebaseFirestoreResultLis
             subscriptionFilterRecycler.setAdapter(subscriptionFilterAdapter);
 
         } else if (getArguments() != null && Objects.equals(getArguments().getString("param"), "Calendar")) {
-            view = inflater.inflate(R.layout.fragment_calendar, container, false);
+            /*view = inflater.inflate(R.layout.fragment_calendar, container, false);
             CalendarView calendar = view.findViewById(R.id.calendar);
             AppCompatTextView ordersTitle = view.findViewById(R.id.orders_title);
 
@@ -307,7 +307,56 @@ public class FragmentHome extends Fragment implements FirebaseFirestoreResultLis
                 selectedDate = DateUtils.getStringFromMillis(calendar1.getTime().getTime(), "yyyy-MM-dd", false);
                 toggleLayouts(false, false);
 
+                startFetchingOrders();*/
+            view = inflater.inflate(R.layout.fragment_calendar, container, false);
+            CalendarView calendar = view.findViewById(R.id.calendar);
+            AppCompatTextView ordersTitle = view.findViewById(R.id.orders_title);
+            orderUpdateTip = view.findViewById(R.id.order_update_tip);
+            notFoundLayout = view.findViewById(R.id.not_found_layout);
+            vacationLayout = view.findViewById(R.id.vacation_layout);
+
+            Log.d("CalendarFragment", "Calendar fragment initialized.");
+
+            // Initialize order list and RecyclerView
+            orderList = new ArrayList<>();
+            orderRecycler = view.findViewById(R.id.order_recycler);
+            orderRecycler.setLayoutManager(new LinearLayoutManager(orderRecycler.getContext(), LinearLayoutManager.VERTICAL, false));
+            orderAdapter.add(orderList);
+            orderRecycler.setAdapter(orderAdapter);
+
+            Log.d("CalendarFragment", "RecyclerView and adapter initialized.");
+
+            // Set the initial orders title to tomorrow's date
+            String tomorrowDate = DateUtils.getStringFromMillis(DateUtils.getTimeAfterAddingDays(Timestamp.now().toDate().getTime(), 1), "EEE MMM dd, yyyy", true);
+            ordersTitle.setText(getString(R.string.orders_title, tomorrowDate));
+            Log.d("CalendarFragment", "Initial orders title set to: " + tomorrowDate);
+
+            // Set the minimum selectable date to tomorrow
+            calendar.setMinDate(DateUtils.getTimeAfterAddingDays(new Date().getTime(), 1));
+            Log.d("CalendarFragment", "Minimum selectable date set to tomorrow.");
+
+            // Handle date selection
+            calendar.setOnDateChangeListener((calendarView, year, month, dayOfMonth) -> {
+                Calendar selectedCalendar = Calendar.getInstance();
+                selectedCalendar.set(year, month, dayOfMonth);
+
+                // Update the orders title with the selected date
+                String selectedDateFormatted = DateUtils.getStringFromMillis(selectedCalendar.getTime().getTime(), "EEE MMM dd, yyyy", true);
+                ordersTitle.setText(getString(R.string.orders_title, selectedDateFormatted));
+                Log.d("CalendarFragment", "Selected date: " + selectedDateFormatted);
+
+                // Store the selected date in "yyyy-MM-dd" format
+                selectedDate = DateUtils.getStringFromMillis(selectedCalendar.getTime().getTime(), "yyyy-MM-dd", false);
+                Log.d("CalendarFragment", "Selected date stored as: " + selectedDate);
+
+                // Hide vacation and not found layouts
+                toggleLayouts(false, false);
+                Log.d("CalendarFragment", "Toggled layouts: vacation and not found layouts hidden.");
+
+                // Fetch orders for the selected date
                 startFetchingOrders();
+                Log.d("CalendarFragment", "Started fetching orders for selected date.");
+
             });
 
             orderAdapter.addEventHook(new ClickEventHook<Order>() {
@@ -611,7 +660,7 @@ public class FragmentHome extends Fragment implements FirebaseFirestoreResultLis
     /**
      * @noinspection DataFlowIssue
      */
-    public void getSubscriptions() {
+   /* public void getSubscriptions() {
 
         toggleProgressBar(true);
         String customerID = ((WhyteFarmsApplication) requireActivity().getApplicationContext()).getCustomerIDFromLoginState();
@@ -784,6 +833,274 @@ public class FragmentHome extends Fragment implements FirebaseFirestoreResultLis
                 }
             });
 
+        } else {
+            checkLogin();
+        }
+    }*/
+
+    public void getSubscriptions() {
+
+        toggleProgressBar(true);
+        String customerID = ((WhyteFarmsApplication) requireActivity().getApplicationContext()).getCustomerIDFromLoginState();
+        if (customerID != null && !customerID.isEmpty()) {
+
+            subscriptionAdapter.clear();
+            subscriptionList.clear();
+            subscriptionAdapter.notifyAdapterDataSetChanged();
+
+            database.collection(AppConstants.SUBSCRIPTION_DATA_COLLECTION)
+                    .where(Filter.equalTo("customer_id", customerID))
+                    .orderBy("start_date", Query.Direction.ASCENDING)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful() && isAdded()) {
+
+                            if (!task.getResult().isEmpty()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Subscription subscription = new Subscription();
+
+                                    // Check if any problematic fields exist that would cause toObject() to fail
+                                    boolean needsManualMapping = false;
+
+                                    // Check resume_date
+                                    if (document.get("resume_date") instanceof String) {
+                                        needsManualMapping = true;
+                                    }
+
+                                    // Check price
+                                    Object priceObj = document.get("price");
+                                    if (priceObj instanceof Double) {
+                                        needsManualMapping = true;
+                                    }
+
+                                    if (needsManualMapping || document.get("interval") == null ||
+                                            !(document.get("interval") instanceof Long) ||
+                                            document.get("interval").equals(NaN)) {
+
+                                        // Manual mapping for documents that can't be automatically converted
+                                        subscription.coupon_code = (String) document.get("coupon_code");
+                                        subscription.created_date = (Timestamp) document.get("created_date");
+                                        subscription.customer_address = (String) document.get("customer_address");
+                                        subscription.customer_id = (String) document.get("customer_id");
+                                        subscription.customer_name = (String) document.get("customer_name");
+                                        subscription.customer_phone = (String) document.get("customer_phone");
+                                        subscription.end_date = document.get("end_date");
+                                        subscription.sunday = document.get("sunday") != null ? (Long) document.get("sunday") : 0;
+                                        subscription.monday = document.get("monday") != null ? (Long) document.get("monday") : 0;
+                                        subscription.tuesday = document.get("tuesday") != null ? (Long) document.get("tuesday") : 0;
+                                        subscription.wednesday = document.get("wednesday") != null ? (Long) document.get("wednesday") : 0;
+                                        subscription.thursday = document.get("thursday") != null ? (Long) document.get("thursday") : 0;
+                                        subscription.friday = document.get("friday") != null ? (Long) document.get("friday") : 0;
+                                        subscription.saturday = document.get("saturday") != null ? (Long) document.get("saturday") : 0;
+                                        subscription.hub_name = (String) document.get("hub_name");
+                                        subscription.delivering_to = (String) document.get("delivering_to");
+                                        subscription.delivered_by = (String) document.get("delivered_by");
+                                        subscription.interval = document.get("interval");
+                                        subscription.next_delivery_date = (String) document.get("next_delivery_date");
+                                        subscription.package_unit = (String) document.get("package_unit");
+
+                                        // Handle price safely with type conversion
+                                        if (priceObj instanceof Long) {
+                                            subscription.price = (Long) priceObj;
+                                        } else if (priceObj instanceof Double) {
+                                            // Convert Double to Long
+                                            subscription.price = ((Double) priceObj).longValue();
+                                        } else if (priceObj instanceof Integer) {
+                                            subscription.price = ((Integer) priceObj).longValue();
+                                        } else {
+                                            subscription.price = 0L; // Default value if null or unexpected type
+                                        }
+
+                                        subscription.product_name = (String) document.get("product_name");
+                                        subscription.quantity = document.get("quantity") != null ? (Long) document.get("quantity") : 0;
+
+                                        // Handle resume_date conversion
+                                        Object resumeDateObj = document.get("resume_date");
+                                        if (resumeDateObj == null) {
+                                            subscription.resume_date = null;
+                                        } else if (resumeDateObj instanceof String) {
+                                            String resumeDateStr = (String) resumeDateObj;
+                                            if (resumeDateStr.isEmpty()) {
+                                                subscription.resume_date = null;
+                                            } else {
+                                                try {
+                                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                                    Date date = sdf.parse(resumeDateStr);
+                                                    subscription.resume_date = new Timestamp(date);
+                                                } catch (ParseException e) {
+                                                    Log.e("FragmentHome", "Failed to parse resume_date: " + resumeDateStr, e);
+                                                    subscription.resume_date = null;
+                                                }
+                                            }
+                                        } else if (resumeDateObj instanceof Timestamp) {
+                                            subscription.resume_date = (Timestamp) resumeDateObj;
+                                        } else {
+                                            subscription.resume_date = null;
+                                        }
+
+                                        subscription.start_date = (Timestamp) document.get("start_date");
+                                        subscription.status = (String) document.get("status");
+                                        subscription.subscription_id = (String) document.get("subscription_id");
+                                        subscription.subscription_type = (String) document.get("subscription_type");
+                                        subscription.updated_date = (Timestamp) document.get("updated_date");
+                                        subscription.reason = (String) document.get("reason");
+                                    } else {
+                                        // Try automatic conversion for documents without problematic fields
+                                        try {
+                                            subscription = document.toObject(Subscription.class);
+                                        } catch (Exception e) {
+                                            Log.e("FragmentHome", "Error converting document to Subscription object: " + e.getMessage(), e);
+
+                                            // Fallback to manual mapping if automatic conversion fails
+                                            subscription.coupon_code = (String) document.get("coupon_code");
+                                            subscription.created_date = (Timestamp) document.get("created_date");
+                                            subscription.customer_address = (String) document.get("customer_address");
+                                            subscription.customer_id = (String) document.get("customer_id");
+                                            subscription.customer_name = (String) document.get("customer_name");
+                                            subscription.customer_phone = (String) document.get("customer_phone");
+                                            subscription.end_date = document.get("end_date");
+                                            subscription.sunday = document.get("sunday") != null ? (Long) document.get("sunday") : 0;
+                                            subscription.monday = document.get("monday") != null ? (Long) document.get("monday") : 0;
+                                            subscription.tuesday = document.get("tuesday") != null ? (Long) document.get("tuesday") : 0;
+                                            subscription.wednesday = document.get("wednesday") != null ? (Long) document.get("wednesday") : 0;
+                                            subscription.thursday = document.get("thursday") != null ? (Long) document.get("thursday") : 0;
+                                            subscription.friday = document.get("friday") != null ? (Long) document.get("friday") : 0;
+                                            subscription.saturday = document.get("saturday") != null ? (Long) document.get("saturday") : 0;
+                                            subscription.hub_name = (String) document.get("hub_name");
+                                            subscription.delivering_to = (String) document.get("delivering_to");
+                                            subscription.delivered_by = (String) document.get("delivered_by");
+                                            subscription.interval = document.get("interval");
+                                            subscription.next_delivery_date = (String) document.get("next_delivery_date");
+                                            subscription.package_unit = (String) document.get("package_unit");
+
+                                            // Handle price safely
+                                            Object priceValue = document.get("price");
+                                            if (priceValue instanceof Long) {
+                                                subscription.price = (Long) priceValue;
+                                            } else if (priceValue instanceof Double) {
+                                                subscription.price = ((Double) priceValue).longValue();
+                                            } else if (priceValue instanceof Integer) {
+                                                subscription.price = ((Integer) priceValue).longValue();
+                                            } else {
+                                                subscription.price = 0L;
+                                            }
+
+                                            subscription.product_name = (String) document.get("product_name");
+                                            subscription.quantity = document.get("quantity") != null ? (Long) document.get("quantity") : 0;
+                                            subscription.resume_date = (Timestamp) document.get("resume_date");
+                                            subscription.start_date = (Timestamp) document.get("start_date");
+                                            subscription.status = (String) document.get("status");
+                                            subscription.subscription_id = (String) document.get("subscription_id");
+                                            subscription.subscription_type = (String) document.get("subscription_type");
+                                            subscription.updated_date = (Timestamp) document.get("updated_date");
+                                            subscription.reason = (String) document.get("reason");
+                                        }
+                                    }
+
+                                    subscription.mContext = FragmentHome.this;
+                                    subscriptionList.add(subscription);
+                                    subscriptionAdapter.add(subscription);
+                                    subscriptionAdapter.notifyAdapterItemChanged(subscriptionAdapter.getAdapterItemCount() - 1);
+                                }
+
+                                if (!subscriptionAdapter.getAdapterItems().isEmpty()) {
+                                    subscriptionFilterList = new ArrayList<>();
+
+                                    subscriptionFilterList.add(new Item(ContextCompat.getString(requireContext(), R.string.all), "Subscription"));
+                                    subscriptionFilterList.add(new Item(ContextCompat.getString(requireActivity(), R.string.active), "Subscription"));
+                                    subscriptionFilterList.add(new Item(ContextCompat.getString(requireActivity(), R.string.paused), "Subscription"));
+                                    //subscriptionFilterList.add(new Item(ContextCompat.getString(requireActivity(), R.string.ended), "Subscription"));
+
+                                    subscriptionFilterList.get(0).setSelected(true);
+                                    subscriptionFilterAdapter.clear();
+                                    subscriptionFilterAdapter.add(subscriptionFilterList);
+
+                                    subscriptionFilterAdapter.notifyAdapterDataSetChanged();
+
+                                    subscriptionFilterAdapter.addEventHook(new ClickEventHook<Item>() {
+
+                                        @Nullable
+                                        @Override
+                                        public View onBind(@NonNull RecyclerView.ViewHolder viewHolder) {
+                                            if (viewHolder instanceof Item.ItemViewHolder) {
+                                                return ((Item.ItemViewHolder) viewHolder).itemText;
+                                            }
+                                            return null;
+                                        }
+
+                                        @Override
+                                        public void onClick(@NonNull View view, int i, @NonNull FastAdapter<Item> fastAdapter, @NonNull Item item) {
+                                            subscriptionFilterAdapter.getAdapterItems().forEach(itemModel -> {
+                                                itemModel.setSelected(false);
+                                                subscriptionFilterAdapter.notifyAdapterItemChanged(subscriptionFilterAdapter.getAdapterPosition(itemModel));
+                                            });
+                                            item.setSelected(true);
+                                            subscriptionFilterAdapter.notifyAdapterItemChanged(subscriptionFilterAdapter.getAdapterPosition(item));
+                                            filterSubscriptionByStatus(item.getItemTitle());
+                                        }
+                                    });
+
+                                    subscriptionFilters.setVisibility(View.VISIBLE);
+                                    notFoundLayout.setVisibility(View.GONE);
+                                }
+                            } else {
+                                subscriptionFilters.setVisibility(View.GONE);
+                                notFoundLayout.setVisibility(View.VISIBLE);
+                            }
+                            toggleProgressBar(false);
+                        } else {
+                            toggleProgressBar(false);
+                        }
+                    });
+
+            subscriptionAdapter.addEventHook(new ClickEventHook<Subscription>() {
+                @Nullable
+                @Override
+                public View onBind(@NonNull RecyclerView.ViewHolder viewHolder) {
+                    if (viewHolder instanceof Subscription.SubscriptionViewHolder) {
+                        return ((Subscription.SubscriptionViewHolder) viewHolder).editSubscription;
+                    }
+                    return null;
+                }
+
+                @Override
+                public void onClick(@NonNull View view, int i, @NonNull FastAdapter<Subscription> fastAdapter, @NonNull Subscription item) {
+                    editSubscription(item.toString(), item.subscription_type);
+                }
+            });
+
+            subscriptionAdapter.addEventHook(new ClickEventHook<Subscription>() {
+                @Nullable
+                @Override
+                public View onBind(@NonNull RecyclerView.ViewHolder viewHolder) {
+                    if (viewHolder instanceof Subscription.SubscriptionViewHolder) {
+                        return ((Subscription.SubscriptionViewHolder) viewHolder).deleteSubscription;
+                    }
+                    return null;
+                }
+
+                @Override
+                public void onClick(@NonNull View view, int i, @NonNull FastAdapter<Subscription> fastAdapter, @NonNull Subscription item) {
+                    if (isAdded()) {
+                        if (deleteConfirmDialog == null || !deleteConfirmDialog.isShowing()) {
+                            deleteConfirmDialog = new AlertDialog.Builder(requireActivity(), R.style.AlertDialogStyle)
+                                    .setTitle(R.string.delte_subscription)
+                                    .setMessage(String.format(getString(R.string.delete_subscription_warning),
+                                            item.subscription_type, item.product_name, item.package_unit))
+                                    .setCancelable(true)
+                                    .setPositiveButton(android.R.string.yes, (dialogInterface, i1) -> {
+                                        deleteSubscription(item.subscription_id);
+                                    })
+                                    .setNegativeButton(android.R.string.no, (dialogInterface, i12) -> {
+                                        dialogInterface.dismiss();
+                                    })
+                                    .create();
+
+                            deleteConfirmDialog.show();
+                        }
+                    }
+                }
+            });
         } else {
             checkLogin();
         }
@@ -1416,6 +1733,89 @@ public class FragmentHome extends Fragment implements FirebaseFirestoreResultLis
             checkLogin();
         }
     }
+   /*private void getWalletBalanceAndTxns() {
+       toggleProgressBar(true);
+       String customerID = ((WhyteFarmsApplication) requireActivity().getApplicationContext()).getCustomerIDFromLoginState();
+       if (customerID != null && !customerID.isEmpty()) {
+
+           database.collection(AppConstants.CUSTOMER_DATA_COLLECTION)
+                   .whereEqualTo("customer_id", customerID)
+                   .limit(1)
+                   .get()
+                   .addOnCompleteListener(task -> {
+                       if (task.isSuccessful() && isAdded()) {
+                           if (task.getResult() != null && !task.getResult().isEmpty()) {
+                               Customer customer = task.getResult().getDocuments().get(0).toObject(Customer.class);
+                               if (customer != null) {
+                                   walletBalance.setText(String.format(Locale.getDefault(), "₹%s", new DecimalFormat("0.00").format(customer.wallet_balance)));
+                               }
+                               toggleProgressBar(false);
+                           } else {
+                               toggleProgressBar(false);
+                           }
+                       }
+                   });
+
+           transactions.clear();
+           transactionAdapter.clear();
+           transactionAdapter.notifyAdapterDataSetChanged();
+
+           toggleProgressBar(true);
+
+           database.collection(AppConstants.WALLET_HISTORY_COLLECTION)
+                   .whereEqualTo("customer_id", customerID)
+                   .orderBy("created_date", Query.Direction.DESCENDING)
+                   .get()
+                   .addOnCompleteListener(task -> {
+                       if (task.isSuccessful() && isAdded()) {
+                           if (task.getResult() != null && !task.getResult().isEmpty()) {
+                               double runningBalance = 0; // Initialize running balance
+
+                               for (DocumentSnapshot document : task.getResult()) {
+                                   Transaction transaction = document.toObject(Transaction.class);
+                                   if (transaction != null) {
+                                       // Handle the amount field based on its type
+                                       double amountValue = 0.0;
+                                       if (transaction.amount instanceof Double) {
+                                           amountValue = (Double) transaction.amount;
+                                       } else if (transaction.amount instanceof Long) {
+                                           amountValue = ((Long) transaction.amount).doubleValue();
+                                       } else if (transaction.amount instanceof String) {
+                                           try {
+                                               amountValue = Double.parseDouble((String) transaction.amount);
+                                           } catch (NumberFormatException e) {
+                                               Log.e("FragmentHome", "Failed to parse amount as Double: " + transaction.amount, e);
+                                           }
+                                       }
+
+                                       // Calculate the running balance
+                                       if (transaction.type.equalsIgnoreCase("Credit")) {
+                                           runningBalance += amountValue; // Add for Credit
+                                       } else if (transaction.type.equalsIgnoreCase("Debit")) {
+                                           runningBalance -= amountValue; // Subtract for Debit
+                                       }
+
+                                       // Set the ledger balance for the transaction
+                                       transaction.ledgerBalance = runningBalance;
+
+                                       transactions.add(transaction);
+                                       transactionAdapter.add(transaction);
+                                   }
+                               }
+                               transactionAdapter.notifyAdapterDataSetChanged();
+                           } else {
+                               if (isAdded()) {
+                                   Toast.makeText(requireActivity(), R.string.failed_to_fetch_transactions, Toast.LENGTH_SHORT).show();
+                               }
+                           }
+                           toggleProgressBar(false);
+                       }
+                   });
+       } else {
+           checkLogin();
+       }
+   }*/
+
 
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -1610,12 +2010,13 @@ public class FragmentHome extends Fragment implements FirebaseFirestoreResultLis
                     case AppConstants.SUBSCRIPTION_TYPE_CUSTOMIZE:
                         try {
                             String weekday = DateUtils.getWeekDayFromDate(selectedDate, "yyyy-MM-dd", false);
-
+                            boolean foundNonZero = false; //todo added becuase of the continous progress bar on 22 march
                             switch (weekday) {
                                 case AppConstants.WEEKDAY_SUNDAY:
                                     if (subscription.sunday > 0) {
                                         subscription.quantity = subscription.sunday;
                                         createOrderFromSubscription(subscription);
+                                        foundNonZero = true;
                                     }
                                     break;
                                 case AppConstants.WEEKDAY_MONDAY:
@@ -1655,9 +2056,16 @@ public class FragmentHome extends Fragment implements FirebaseFirestoreResultLis
                                     }
                                     break;
                             }
+                            //todo added because of the continous progress bar on 22 march
+                            if (!foundNonZero) {
+
+                                toggleLayouts(true, false);
+                                toggleProgressBar(false);
+                            }
 
                         } catch (ParseException e) {
                             toggleLayouts(true, false);
+                            toggleProgressBar(false);
                         }
                         break;
                 }

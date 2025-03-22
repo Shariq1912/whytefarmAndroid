@@ -153,7 +153,7 @@ public class LoginActivity extends BaseActivity {
 
             if (otpLayoutInput.getEditText() != null && otpLayoutInput.getEditText().getText() != null) {
                 String enteredOtp = otpLayoutInput.getEditText().getText().toString();
-
+                Log.d("enteredOtp ", generatedOtp);
                 if (!enteredOtp.isEmpty()) {
                     if (enteredOtp.length() == 4 && generatedOtp.equals(enteredOtp)) {
                         showLoginResult(getString(R.string.otp_matched), true);

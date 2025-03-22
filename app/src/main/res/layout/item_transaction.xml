@@ -101,7 +101,21 @@
             android:textSize="@dimen/text_size_l"
             android:textStyle="bold"
             tools:text="₹86.00" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/ledger_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="end"
+            android:paddingStart="@dimen/dimen_4dp"
+            android:paddingEnd="@dimen/dimen_4dp"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/text_size_l"
+            android:textStyle="bold"
+            tools:text="₹86.00" />
+
     </LinearLayout>
+
 
 
     <View

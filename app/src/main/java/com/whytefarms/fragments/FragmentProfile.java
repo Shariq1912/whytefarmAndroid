@@ -646,7 +646,11 @@ public class FragmentProfile extends BottomSheetDialogFragment implements Compou
         chkInBag.setChecked(false);
         chkInHand.setChecked(false);
         chkNoPref.setChecked(false);
-
+        if (deliveryMode == null) {
+            // Default to no preference if delivery mode is null
+            chkNoPref.setChecked(true);
+            return;
+        }
         switch (deliveryMode) {
             default:
             case AppConstants.DELIVERY_PREFERENCE_RING_DOOR_BELL:
