@@ -3,6 +3,7 @@ package com.whytefarms.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -29,6 +30,8 @@ import com.whytefarms.fastModels.Subscription;
 import com.whytefarms.firebaseModels.Customer;
 import com.whytefarms.firebaseModels.FirebaseSubscription;
 import com.whytefarms.interfaces.FirebaseFirestoreResultListener;
+import com.whytefarms.models.CartModel;
+import com.whytefarms.models.CartProduct;
 import com.whytefarms.utils.AppConstants;
 import com.whytefarms.utils.Cart;
 import com.whytefarms.firebaseModels.CustomerActivity;
@@ -37,6 +40,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -216,66 +220,22 @@ public class CheckoutActivity extends BaseActivity implements FirebaseFirestoreR
         toggleProgressBar(true);
         cartItems.clear();
         cartAdapter.clear();
-        SharedPreferences pref = getSharedPreferences("cart", MODE_PRIVATE);
-
-        if (pref != null) {
-            try {
-                String cartString = pref.getString("cart_items", "");
-                JSONArray items;
-                if (!cartString.isEmpty()) {
-                    items = new JSONArray(cartString);
-
-                    for (int i = 0; i < items.length(); i++) {
-                        JSONObject item = items.getJSONObject(i);
-
-                        //   Log.d("TAG", "setUpCartRecycler: " + item.toString());
-
-                        Subscription cartItem = new Subscription();
-
-                        cartItem.mContext = CheckoutActivity.this;
-                        cartItem.sunday = item.getLong("sunday");
-                        cartItem.monday = item.getLong("monday");
-                        cartItem.tuesday = item.getLong("tuesday");
-                        cartItem.wednesday = item.getLong("wednesday");
-                        cartItem.thursday = item.getLong("thursday");
-                        cartItem.friday = item.getLong("friday");
-                        cartItem.saturday = item.getLong("saturday");
-                        cartItem.interval = item.getLong("interval");
-                        cartItem.package_unit = item.getString("package_unit");
-                        cartItem.price = item.getLong("price");
-                        cartItem.product_name = item.getString("product_name");
-                        cartItem.quantity = item.getLong("quantity");
-                        cartItem.start_date = new Timestamp(new Date(item.getLong("start_date")));
-                        cartItem.end_date = new Timestamp(new Date(item.getLong("end_date")));
-                        cartItem.subscription_id = item.getString("subscription_id");
-                        cartItem.subscription_type = item.getString("subscription_type");
-                        cartItem.next_delivery_date = item.getString("next_delivery_date");
-                        cartItem.hub_name = item.getString("hub_name");
-                        cartItem.status = item.getString("status");
-                        cartItem.resume_date = new Timestamp(new Date(item.getLong("resume_date")));
-                        cartItem.isCartItem = true;
-                        cartItem.reason = "";
-
-                        cartItems.add(cartItem);
-                        cartAdapter.add(cartItem);
-                        cartAdapter.notifyAdapterItemChanged(cartAdapter.getAdapterPosition(cartItem));
-                    }
-                }
-
-                if (!cartItems.isEmpty()) {
-                    noItemLayout.setVisibility(View.GONE);
-                } else {
-                    noItemLayout.setVisibility(View.VISIBLE);
-                    proceedToPay.setVisibility(View.GONE);
-                }
-
-                toggleProgressBar(false);
-            } catch (JSONException ignored) {
-            }
-        } else {
-            noItemLayout.setVisibility(View.VISIBLE);
-            toggleProgressBar(false);
+        
+        if (cartRecycler == null) {
+            cartRecycler = findViewById(R.id.cart_recycler);
+            ((SimpleItemAnimator) cartRecycler.getItemAnimator()).setSupportsChangeAnimations(false);
+            cartRecycler.setLayoutManager(new LinearLayoutManager(this));
+            cartRecycler.setAdapter(cartAdapter);
         }
+        
+        if (isLoggedIn()) {
+            // Fetch from Firestore for logged-in users
+            fetchCartFromFirestore();
+        } else {
+            // Use existing SharedPreferences logic for non-logged in users
+            fetchCartFromPreferences();
+        }
+        
         cart.setCartValue();
 
         cartAdapter.addEventHook(new ClickEventHook<Subscription>() {
@@ -285,7 +245,6 @@ public class CheckoutActivity extends BaseActivity implements FirebaseFirestoreR
                 if (viewHolder instanceof Subscription.SubscriptionViewHolder) {
                     return ((Subscription.SubscriptionViewHolder) viewHolder).deleteCartItem;
                 }
-
                 return null;
             }
 
@@ -296,6 +255,105 @@ public class CheckoutActivity extends BaseActivity implements FirebaseFirestoreR
         });
     }
 
+    private boolean isLoggedIn() {
+        return getApplicationContext() instanceof WhyteFarmsApplication && 
+               ((WhyteFarmsApplication) getApplicationContext()).isLoggedIn();
+    }
+
+    private void fetchCartFromFirestore() {
+        String customerId = ((WhyteFarmsApplication) getApplicationContext()).getCustomerIDFromLoginState();
+        if (customerId == null) {
+            showEmptyCart();
+            toggleProgressBar(false);
+            return;
+        }
+
+        FirebaseFirestore.getInstance().collection("cart_data")
+                .whereEqualTo("customer_id", customerId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                        try {
+                            // Get cart document
+                            CartModel cart = task.getResult().getDocuments().get(0).toObject(CartModel.class);
+                            if (cart != null && cart.getProducts() != null && !cart.getProducts().isEmpty()) {
+                                // Convert CartProduct to Subscription
+                                for (CartProduct product : cart.getProducts()) {
+                                    Subscription cartItem = convertCartProductToSubscription(product);
+                                    cartItems.add(cartItem);
+                                    cartAdapter.add(cartItem);
+                                }
+                                
+                                noItemLayout.setVisibility(View.GONE);
+                                proceedToPay.setVisibility(View.VISIBLE);
+                                calculateOrderValue();
+                            } else {
+                                showEmptyCart();
+                            }
+                        } catch (Exception e) {
+                            Log.e("CheckoutActivity", "Error processing cart data", e);
+                            showEmptyCart();
+                        }
+                    } else {
+                        showEmptyCart();
+                    }
+                    toggleProgressBar(false);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("CheckoutActivity", "Error fetching cart from Firestore", e);
+                    showEmptyCart();
+                    toggleProgressBar(false);
+                });
+    }
+
+    private Subscription convertCartProductToSubscription(CartProduct product) {
+        Subscription cartItem = new Subscription();
+        
+        cartItem.mContext = CheckoutActivity.this;
+        cartItem.sunday = product.getSunday();
+        cartItem.monday = product.getMonday();
+        cartItem.tuesday = product.getTuesday();
+        cartItem.wednesday = product.getWednesday();
+        cartItem.thursday = product.getThursday();
+        cartItem.friday = product.getFriday();
+        cartItem.saturday = product.getSaturday();
+        cartItem.interval = product.getInterval();
+        cartItem.package_unit = product.getPackage_unit();
+        cartItem.price = product.getPrice();
+        cartItem.product_name = product.getProduct_name();
+        cartItem.quantity = product.getQuantity();
+        
+        // Handle dates
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'00:00:00.000ZZ", Locale.US);
+            if (product.getStartDate() != null) {
+                Date startDate = dateFormat.parse(product.getStartDate());
+                cartItem.start_date = new Timestamp(startDate);
+            }
+            if (product.getEndDate() != null) {
+                Date endDate = dateFormat.parse(product.getEndDate());
+                cartItem.end_date = new Timestamp(endDate);
+            }
+        } catch (Exception e) {
+            Log.e("CheckoutActivity", "Error parsing dates", e);
+        }
+        
+        cartItem.subscription_id = product.getProduct_id();
+        cartItem.subscription_type = product.getSubscriptionType();
+        cartItem.next_delivery_date = product.getNext_delivery_date();
+        cartItem.hub_name = ""; // Default value
+        cartItem.status = ""; // Default value
+        cartItem.resume_date = new Timestamp(new Date()); // Default value
+        cartItem.isCartItem = true;
+        cartItem.reason = product.getReason();
+
+        return cartItem;
+    }
+
+    private void showEmptyCart() {
+        noItemLayout.setVisibility(View.VISIBLE);
+        proceedToPay.setVisibility(View.GONE);
+    }
 
     private void calculateOrderValue() {
         priceTitle.setText(String.format(Locale.getDefault(), getString(R.string.price_title_placeholder), cartAdapter.getAdapterItems().size()));
@@ -401,11 +459,11 @@ public class CheckoutActivity extends BaseActivity implements FirebaseFirestoreR
                             customerActivity.platform = "Android";
 
                             database.collection("customer_activities").add(customerActivity)
-                            .addOnSuccessListener(activityDocumentReference -> {
+                                    .addOnSuccessListener(activityDocumentReference -> {
 
 
-                            checkAllUploaded();
-                            });
+                                        checkAllUploaded();
+                                    });
                         } else {
                             Toast.makeText(this, R.string.subscriptions_created_successfully, Toast.LENGTH_SHORT).show();
                         }
@@ -438,21 +496,37 @@ public class CheckoutActivity extends BaseActivity implements FirebaseFirestoreR
     }
 
     public void removeFromAdapter(String itemID) {
-        int index = -1;
-
+        // Find the item to remove
+        Subscription itemToRemove = null;
         for (Subscription subscription : cartAdapter.getAdapterItems()) {
             if (subscription.subscription_id.equalsIgnoreCase(itemID)) {
-                index = cartAdapter.getAdapterPosition(subscription);
+                itemToRemove = subscription;
                 break;
             }
         }
 
-        if (index > -1) {
-            cartAdapter.remove(index);
-            cartAdapter.notifyItemRemoved(index);
-
-            cartRecycler.postDelayed(this::calculateOrderValue, 500);
+        if (itemToRemove != null) {
+            // First remove from our data list
+            cartItems.remove(itemToRemove);
+            
+            // Then safely remove from adapter
+            final Subscription finalItemToRemove = itemToRemove;
+            runOnUiThread(() -> {
+                int position = cartAdapter.getAdapterPosition(finalItemToRemove);
+                if (position >= 0) {
+                    cartAdapter.remove(position);
+                    
+                    // Check if cart is now empty
+                    if (cartAdapter.getItemCount() == 0) {
+                        showEmptyCart();
+                    } else {
+                        calculateOrderValue();
+                    }
+                }
+            });
         }
+        
+        toggleProgressBar(false);
     }
 
     @Override
@@ -463,5 +537,68 @@ public class CheckoutActivity extends BaseActivity implements FirebaseFirestoreR
     @Override
     public void onError(Throwable error) {
 
+    }
+
+    private void fetchCartFromPreferences() {
+        SharedPreferences pref = getSharedPreferences("cart", MODE_PRIVATE);
+
+        if (pref != null) {
+            try {
+                String cartString = pref.getString("cart_items", "");
+                JSONArray items;
+                if (!cartString.isEmpty()) {
+                    items = new JSONArray(cartString);
+
+                    for (int i = 0; i < items.length(); i++) {
+                        JSONObject item = items.getJSONObject(i);
+
+                        Subscription cartItem = new Subscription();
+
+                        cartItem.mContext = CheckoutActivity.this;
+                        cartItem.sunday = item.getLong("sunday");
+                        cartItem.monday = item.getLong("monday");
+                        cartItem.tuesday = item.getLong("tuesday");
+                        cartItem.wednesday = item.getLong("wednesday");
+                        cartItem.thursday = item.getLong("thursday");
+                        cartItem.friday = item.getLong("friday");
+                        cartItem.saturday = item.getLong("saturday");
+                        cartItem.interval = item.getLong("interval");
+                        cartItem.package_unit = item.getString("package_unit");
+                        cartItem.price = item.getLong("price");
+                        cartItem.product_name = item.getString("product_name");
+                        cartItem.quantity = item.getLong("quantity");
+                        cartItem.start_date = new Timestamp(new Date(item.getLong("start_date")));
+                        cartItem.end_date = new Timestamp(new Date(item.getLong("end_date")));
+                        cartItem.subscription_id = item.getString("subscription_id");
+                        cartItem.subscription_type = item.getString("subscription_type");
+                        cartItem.next_delivery_date = item.getString("next_delivery_date");
+                        cartItem.hub_name = item.getString("hub_name");
+                        cartItem.status = item.getString("status");
+                        cartItem.resume_date = new Timestamp(new Date(item.getLong("resume_date")));
+                        cartItem.isCartItem = true;
+                        cartItem.reason = "";
+
+                        cartItems.add(cartItem);
+                        cartAdapter.add(cartItem);
+                    }
+                }
+
+                if (!cartItems.isEmpty()) {
+                    noItemLayout.setVisibility(View.GONE);
+                    proceedToPay.setVisibility(View.VISIBLE);
+                } else {
+                    showEmptyCart();
+                }
+
+                toggleProgressBar(false);
+            } catch (JSONException e) {
+                Log.e("CheckoutActivity", "Error parsing cart from preferences", e);
+                showEmptyCart();
+                toggleProgressBar(false);
+            }
+        } else {
+            showEmptyCart();
+            toggleProgressBar(false);
+        }
     }
 }
